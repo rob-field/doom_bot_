@@ -8,6 +8,7 @@ import requests
 import random
 
 # Initialise the reddit instance
+# Credentials are stored in a praw.ini file
 reddit = praw.Reddit('bot1')
 # Create/connect to the database
 db = dataset.connect('sqlite:///doom_db.db')
