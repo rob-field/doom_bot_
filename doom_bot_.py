@@ -8,6 +8,7 @@ import requests
 import random
 
 # Initialise the reddit instance
+# Credentials are stored in a praw.ini file
 reddit = praw.Reddit('bot1')
 # Create/connect to the database
 db = dataset.connect('sqlite:///doom_db.db')
@@ -37,7 +38,10 @@ def doom_bot():
     # Selection of subreddits to search
     subreddit = reddit.subreddit("90sHipHop+freshalbumart+hiphop+Hiphopcirclejerk+HipHopImages+hiphopvinyl+"
                                  "ifyoulikeblank+makinghiphop+MetalFingers+mfdoom+MFDOOMCIRCLEJERK+Music+rap+"
-                                 "treemusic+Bossfight+hiphopheads")
+                                 "treemusic+Bossfight+hiphopheads+ListenToThis+DubStep+AlbumArtPorn+Audiophile+OFWGKTA+LetsTalkMusic+"
+                                 "chillmusic+Spotify+triphop+musicnews+Grime+altrap+backpacker+ukhiphopheads+hiphoptruth+"
+                                 "asianrap+80sHipHop+backspin+hiphopheadsnorthwest+hiphop101+NYrap+raprock+rhymesandbeats+rapverses+"
+                                 "undergroundchicago+LofiHipHop")
 
     # Searching through each comment, checking if the ID is already in the database
     # If not check for appropriate pattern and capitalisation (or lack thereof), respond appropriately
@@ -66,12 +70,13 @@ def main():
 
     while True:
         try:
+            print("Running doom bot...")
             doom_bot()
             print('Sleeping...')
-            time.sleep(150)
+            time.sleep(200)
         except requests.exceptions.ConnectionError as e:
             print("ERROR: Reddit is down...")
-            time.sleep(150)  # sleep because reddit is down
+            time.sleep(200)  # sleep because reddit is down
         except Exception as e:
             print("ERR: {}".format(e))
             exit(1)
