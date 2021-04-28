@@ -43,11 +43,13 @@ def doom_bot():
 
     # Selection of subreddits to search
     subreddit = reddit.subreddit("90sHipHop+freshalbumart+hiphop+Hiphopcirclejerk+HipHopImages+hiphopvinyl+"
-                                 "ifyoulikeblank+makinghiphop+MetalFingers+mfdoom+MFDOOMCIRCLEJERK+Music+rap+"
-                                 "treemusic+Bossfight+hiphopheads+ListenToThis+DubStep+AlbumArtPorn+Audiophile+"
+                                 "ifyoulikeblank+MetalFingers+mfdoom+MFDOOMCIRCLEJERK+Music+rap+"
+                                 "treemusic+Bossfight+ListenToThis+DubStep+AlbumArtPorn+Audiophile+"
                                  "OFWGKTA+LetsTalkMusic+chillmusic+Spotify+triphop+musicnews+Grime+altrap+backpacker+"
                                  "ukhiphopheads+hiphoptruth+asianrap+80sHipHop+backspin+hiphopheadsnorthwest+"
                                  "hiphop101+NYrap+raprock+rhymesandbeats+rapverses+undergroundchicago+LofiHipHop")
+
+    # Ban list - HipHopHeads, makinghiphop
 
     # Private subreddit to test bot
     # subreddit = reddit.subreddit("doom_bot_")
