@@ -51,7 +51,7 @@ def doom_bot():
 
     # Ban list - HipHopHeads, makinghiphop
 
-    # Private subreddit to test bot
+    # Private subreddit to test bot functionality
     # subreddit = reddit.subreddit("doom_bot_")
 
     # Searching through each comment, checking if the ID is already in the database
