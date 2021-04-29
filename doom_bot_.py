@@ -5,6 +5,7 @@ import sqlalchemy
 import time
 import random
 import multiprocessing
+from datetime import datetime, timedelta
 
 # Initialise the reddit instance
 # Credentials are stored in a praw.ini file
@@ -57,20 +58,28 @@ def doom_bot():
     # Searching through each comment, checking if the ID is already in the database
     # If not check for appropriate pattern and capitalisation (or lack thereof), respond appropriately
     for comment in subreddit.stream.comments():
-        if rt.find_one(comment_id=comment.id) is None:
-            if re.search("mf doom", str(comment.body), re.IGNORECASE) and re.search("^(?=.*[a-z]+).",
-                                                                                    str(comment.body)):
-                doom_bot_reply = "Just remember ALL CAPS when you spell the man name!"
-                comment.reply(doom_bot_reply + "\n***\n" + "^^I ^^am ^^a ^^bot.")
+        # Check if the comment is older than 180 seconds
+        now = datetime.now()
+        t1 = datetime.fromtimestamp(comment.created_utc)
+        age = now - t1
+        t2 = timedelta(seconds=180)
+        if age > t2:
+            if rt.find_one(comment_id=comment.id) is None:
+                if re.search("mf doom", str(comment.body), re.IGNORECASE) and re.search("^(?=.*[a-z]+).",
+                                                                                        str(comment.body)):
+                    doom_bot_reply = "Just remember ALL CAPS when you spell the man name!"
+                    comment.reply(doom_bot_reply + "\n***\n" + "^^I ^^am ^^a ^^bot.")
 
-                # Add ID to the database once done
-                data = dict(comment_id=str(comment.id))
-                rt.insert(data)
-            elif re.search("MF DOOM", str(comment.body)):
-                comment.reply(random.choice(DOOM_LYRICS) + "\n" + "***" + "\n" + "^^I ^^am ^^a ^^bot.")
-                data = dict(comment_id=str(comment.id))
-                rt.insert(data)
+                    # Add ID to the database once done
+                    data = dict(comment_id=str(comment.id))
+                    rt.insert(data)
+                elif re.search("MF DOOM", str(comment.body)):
+                    comment.reply(random.choice(DOOM_LYRICS) + "\n" + "***" + "\n" + "^^I ^^am ^^a ^^bot.")
+                    data = dict(comment_id=str(comment.id))
+                    rt.insert(data)
 
+                else:
+                    pass
             else:
                 pass
         else:
@@ -80,18 +89,18 @@ def doom_bot():
 def scheduler():
     while True:
         try:
-            # Run doom bot for 200 seconds
+            # Run doom bot for 60 seconds
             # print("Doom bot running...")
             p = multiprocessing.Process(target=doom_bot,  name="doom_bot")
             p.start()
-            time.sleep(200)
+            time.sleep(60)
 
             # Terminate function
             p.terminate()
 
-            # Sleep the bot for 200 seconds
+            # Sleep the bot for 120 seconds
             # print("Doom bot sleeping...")
-            time.sleep(200)
+            time.sleep(120)
 
             # Cleanup and rerun
             p.join()
@@ -101,4 +110,5 @@ def scheduler():
 
 
 if __name__ == '__main__':
+    print("Off we go...")
     scheduler()
