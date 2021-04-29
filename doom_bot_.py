@@ -6,6 +6,8 @@ import time
 import random
 import multiprocessing
 from datetime import datetime, timedelta
+from dotenv import load_dotenv
+
 
 # Initialise the reddit instance
 # Credentials are stored in a praw.ini file
@@ -63,16 +65,21 @@ def doom_bot():
         t1 = datetime.fromtimestamp(comment.created_utc)
         age = now - t1
         t2 = timedelta(seconds=180)
+
         if age > t2:
+
             if rt.find_one(comment_id=comment.id) is None:
-                if re.search("mf doom", str(comment.body), re.IGNORECASE) and re.search("^(?=.*[a-z]+).",
-                                                                                        str(comment.body)):
+                r = re.findall("(mf doom)", comment.body, re.IGNORECASE)
+
+                if re.search("[mfdo]+", str(r)):
+
                     doom_bot_reply = "Just remember ALL CAPS when you spell the man name!"
                     comment.reply(doom_bot_reply + "\n***\n" + "^^I ^^am ^^a ^^bot.")
 
                     # Add ID to the database once done
                     data = dict(comment_id=str(comment.id))
                     rt.insert(data)
+
                 elif re.search("MF DOOM", str(comment.body)):
                     comment.reply(random.choice(DOOM_LYRICS) + "\n" + "***" + "\n" + "^^I ^^am ^^a ^^bot.")
                     data = dict(comment_id=str(comment.id))
@@ -107,6 +114,8 @@ def scheduler():
         except Exception as e:
             print("ERR: {}".format(e))
             exit(1)
+
+# if re.search("mf doom", str(comment.body)) and re.search("^(?=.*[a-z]+).",  str(comment.body)):
 
 
 if __name__ == '__main__':
