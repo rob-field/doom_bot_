@@ -19,7 +19,7 @@ db = dataset.connect('sqlite:///doom_db.db')
 db.create_table('replied_to')
 rt = db['replied_to']
 
-# create the column for storing ids
+# create comment id column
 db['replied_to'].create_column('comment_id', sqlalchemy.String)
 
 # Selection of MF DOOM Lyrics, more to be added later if necessary
