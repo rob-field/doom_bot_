@@ -6,7 +6,6 @@ import time
 import random
 import multiprocessing
 from datetime import datetime, timedelta
-from dotenv import load_dotenv
 
 
 # Initialise the reddit instance
@@ -107,7 +106,7 @@ def scheduler():
 
             # Sleep the bot for 120 seconds
             # print("Doom bot sleeping...")
-            time.sleep(120)
+            time.sleep(60)
 
             # Cleanup and rerun
             p.join()
