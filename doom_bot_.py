@@ -6,11 +6,19 @@ import time
 import random
 import multiprocessing
 from datetime import datetime, timedelta
+import os
 
 
 # Initialise the reddit instance
 # Credentials are stored in a praw.ini file
-reddit = praw.Reddit('bot1')
+# reddit = praw.Reddit('bot1')
+reddit = praw.Reddit(
+    client_id=os.environ['CLIENT_ID'],
+    client_secret=os.environ['CLIENT_SECRET'],
+    username=os.environ['USERNAME'],
+    password=os.environ['PASSWORD']
+    user_agent="MF_DOOM"
+)
 
 # Create/connect to the database
 # db = dataset.connect('sqlite:///doom_db.db')
