@@ -28,7 +28,7 @@ if uri.startswith("postgres://"):
 
 engine = create_engine(uri)
 db = scoped_session(sessionmaker(bind=engine))
-
+db = db()
 
 # Create/connect to the database
 # db = dataset.connect('sqlite:///doom_db.db')
