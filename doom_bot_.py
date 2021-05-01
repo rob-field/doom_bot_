@@ -11,8 +11,11 @@ from datetime import datetime, timedelta
 # Initialise the reddit instance
 # Credentials are stored in a praw.ini file
 reddit = praw.Reddit('bot1')
+
 # Create/connect to the database
-db = dataset.connect('sqlite:///doom_db.db')
+# db = dataset.connect('sqlite:///doom_db.db')
+db = dataset.connect('postgres://womdrcfvockohc:8292f43f44046a1c2ff7f2a1efd0e20b1737ccd997f2bbbec22f09aa82270e00@ec2'
+                     '-54-74-156-137.eu-west-1.compute.amazonaws.com:5432/d2k8v01m3af348')
 
 # create a table for commments that have been replied to
 db.create_table('replied_to')
@@ -24,7 +27,7 @@ db['replied_to'].create_column('comment_id', sqlalchemy.String)
 # Selection of MF DOOM Lyrics, more to be added later if necessary
 DOOM_LYRICS = ["Catch a throatful from the fire vocal \n\n Ash and molten glass like Eyjafjallajökull",
                "One for the money, two for the better green \n\n 3-4-methylenedioxymethamphetamine \n\n "
-               "Told the knock kneed ghetto queen get the head fiend \n Tell him it's for Medallin and use"
+               "Told the knock kneed ghetto queen get the head fiend \n\n Tell him it's for Medallin and use"
                " oxcyocetaline",
                "Only in America could you find a way to earn a healthy buck and still keep your attitude on self "
                "destruct",
