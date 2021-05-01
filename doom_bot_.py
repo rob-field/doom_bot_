@@ -25,14 +25,14 @@ uri = os.getenv("DATABASE_URL")  # or other relevant config var
 if uri.startswith("postgres://"):
     uri = uri.replace("postgres://", "postgresql://", 1)
 
+
 engine = create_engine(uri)
 db = scoped_session(sessionmaker(bind=engine))
-db = db()
 
 
 # Create/connect to the database
 # db = dataset.connect('sqlite:///doom_db.db')
-db = dataset.connect(uri)
+# db = dataset.connect(uri)
 
 # create a table for commments that have been replied to
 db.create_table('replied_to')
