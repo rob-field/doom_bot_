@@ -20,10 +20,13 @@ reddit = praw.Reddit(
     user_agent="MF_DOOM"
 )
 
+uri = os.getenv("DATABASE_URL")  # or other relevant config var
+if uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
+
 # Create/connect to the database
 # db = dataset.connect('sqlite:///doom_db.db')
-db = dataset.connect('postgres://womdrcfvockohc:8292f43f44046a1c2ff7f2a1efd0e20b1737ccd997f2bbbec22f09aa82270e00@ec2'
-                     '-54-74-156-137.eu-west-1.compute.amazonaws.com:5432/d2k8v01m3af348')
+db = dataset.connect(uri)
 
 # create a table for commments that have been replied to
 db.create_table('replied_to')
