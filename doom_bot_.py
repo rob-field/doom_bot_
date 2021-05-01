@@ -52,12 +52,11 @@ def doom_bot():
                                  "treemusic+Bossfight+ListenToThis+DubStep+AlbumArtPorn+Audiophile+"
                                  "OFWGKTA+LetsTalkMusic+chillmusic+Spotify+triphop+musicnews+Grime+altrap+backpacker+"
                                  "ukhiphopheads+hiphoptruth+asianrap+80sHipHop+backspin+hiphopheadsnorthwest+"
-                                 "hiphop101+NYrap+raprock+rhymesandbeats+rapverses+undergroundchicago+LofiHipHop")
+                                 "hiphop101+NYrap+raprock+rhymesandbeats+rapverses+undergroundchicago+LofiHipHop+"
+                                 "doom_bot_")
 
     # Ban list - HipHopHeads, makinghiphop
 
-    # Private subreddit to test bot
-    # subreddit = reddit.subreddit("doom_bot_")
 
     # Searching through each comment, checking if the ID is already in the database
     # If not check for appropriate pattern and capitalisation (or lack thereof), respond appropriately
