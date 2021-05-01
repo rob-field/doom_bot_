@@ -1,7 +1,8 @@
 import praw
 import re
 import dataset
-import sqlalchemy
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
 import time
 import random
 import multiprocessing
@@ -24,6 +25,10 @@ uri = os.getenv("DATABASE_URL")  # or other relevant config var
 if uri.startswith("postgres://"):
     uri = uri.replace("postgres://", "postgresql://", 1)
 
+engine = create_engine(os.getenv("DATABASE_URL"))
+db = scoped_session(sessionmaker(bind=engine))
+
+
 # Create/connect to the database
 # db = dataset.connect('sqlite:///doom_db.db')
 db = dataset.connect(uri)
@@ -33,7 +38,7 @@ db.create_table('replied_to')
 rt = db['replied_to']
 
 # create comment id column
-db['replied_to'].create_column('comment_id', sqlalchemy.String)
+db['replied_to'].create_column('comment_id', String)
 
 # Selection of MF DOOM Lyrics, more to be added later if necessary
 DOOM_LYRICS = ["Catch a throatful from the fire vocal \n\n Ash and molten glass like Eyjafjallajökull",
