@@ -23,7 +23,7 @@ reddit = praw.Reddit(
 )
 
 
-# Selection of MF DOOM Lyrics, more to be added later if necessary
+# Selection of MF DOOM Lyrics
 DOOM_LYRICS = ["Catch a throatful from the fire vocal \n\n Ash and molten glass like Eyjafjallajökull",
                "One for the money, two for the better green \n\n 3-4-methylenedioxymethamphetamine \n\n "
                "Told the knock kneed ghetto queen get the head fiend \n\n Tell him it's for Medallin and use "
