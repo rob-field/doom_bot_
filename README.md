@@ -21,5 +21,18 @@ datetime
 
 
 # Changelog
-- Added more lyrics
-- Updated to allow deployment with Heroku
+- 3.0.0 
+  - Changed doom_bot_ to allow deployment from Heroku
+- 2.0.0
+  - Added bot scheduler and multiprocessing to prevent overloading with requests
+- 1.2.0 
+  - doom_bot_ now checks the age of each comment before replying, utilising datetime and timedeltas
+  - If comments aren't older than 3 minutes, the bot won't reply
+- 1.1.2
+  - Fixed REGEX issue
+- 1.1.1
+  - Fixed issue where bot would reply to comments with the inappropriate response
+- 1.1.0
+  - doom_bot_ now replies to comments containing "MF DOOM" (no lowercase letters) with a random choice from a selection of MF DOOM lyrics
+- 1.0.0 
+  - doom_bot_ replies to comments where "MF DOOM" contains at least one lowercase letter with the reply: "Just remember ALL CAPS when you spell the man name!"
