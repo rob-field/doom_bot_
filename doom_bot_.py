@@ -1,8 +1,5 @@
 import praw
 import re
-import dataset
-from sqlalchemy import String, create_engine, MetaData, Table, Column
-from sqlalchemy.orm import scoped_session, sessionmaker, declarative_base
 import time
 import random
 import multiprocessing
