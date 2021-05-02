@@ -18,3 +18,8 @@ praw
 SQLAlchemy  
 dataset  
 datetime  
+
+
+# Changelog
+- Added more lyrics
+- Updated to allow deployment with Heroku
