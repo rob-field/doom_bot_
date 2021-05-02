@@ -37,7 +37,13 @@ if uri.startswith("postgres://"):
 
 
 # Database setup
-engine = create_engine(uri)  # Creating an engine object to connect to the database
+
+def connect_db():
+    # create db create_engine
+    db = create_engine(uri)
+    return db
+
+
 Base = declarative_base()
 
 
@@ -47,12 +53,19 @@ class Database(Base):
     comment_id = Column(String, primary_key=True)
 
 
-Session = scoped_session(sessionmaker(bind=engine))
-db = Session()
-Base.metadata.create_all(bind=engine)
+engine = connect_db()
+Database.__table__.create(bind=engine, checkfirst=True)
+
+Session = sessionmaker(bind=engine)
+session = Session()
+
+
+# Session = scoped_session(sessionmaker(bind=engine))
+# db = Session()
+# Base.metadata.create_all(bind=engine)
 
 # Read
-replied_to = db.query(Database)
+replied_to = session.query(Database)
 
 
 # Selection of MF DOOM Lyrics, more to be added later if necessary
@@ -76,7 +89,7 @@ DOOM_LYRICS = ["Catch a throatful from the fire vocal \n\n Ash and molten glass 
 
 # Main function
 def doom_bot():
-    db.engine.dispose()
+    session.engine.dispose()
 
     # Selection of subreddits to search
     subreddit = reddit.subreddit("90sHipHop+freshalbumart+hiphop+Hiphopcirclejerk+HipHopImages+hiphopvinyl+"
@@ -114,8 +127,8 @@ def doom_bot():
 
                         # Add ID to the database once done
                         add_reply = Database(comment_id=comment.id)
-                        db.add(add_reply)
-                        db.commit()
+                        session.add(add_reply)
+                        session.commit()
 
                         # data = dict(comment_id=str(comment.id))
                         # rt.insert(data)
@@ -124,8 +137,8 @@ def doom_bot():
                         comment.reply(random.choice(DOOM_LYRICS) + "\n" + "***" + "\n" + "^^I ^^am ^^a ^^bot.")
 
                         add_reply = Database(comment_id=comment.id)
-                        db.add(add_reply)
-                        db.commit()
+                        session.add(add_reply)
+                        session.commit()
 
                         # data = dict(comment_id=str(comment.id))
                         # rt.insert(data)
