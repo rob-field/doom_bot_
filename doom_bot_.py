@@ -49,7 +49,6 @@ class Database(Base):
 
 Session = scoped_session(sessionmaker(bind=engine))
 db = Session()
-
 Base.metadata.create_all(bind=engine)
 
 # Read
@@ -77,6 +76,7 @@ DOOM_LYRICS = ["Catch a throatful from the fire vocal \n\n Ash and molten glass 
 
 # Main function
 def doom_bot():
+    db.engine.dispose()
 
     # Selection of subreddits to search
     subreddit = reddit.subreddit("90sHipHop+freshalbumart+hiphop+Hiphopcirclejerk+HipHopImages+hiphopvinyl+"
@@ -89,17 +89,18 @@ def doom_bot():
 
     # Ban list - HipHopHeads, makinghiphop
 
-
     # Searching through each comment, checking if the ID is already in the database
     # If not check for appropriate pattern and capitalisation (or lack thereof), respond appropriately
+
     for comment in subreddit.stream.comments():
         # Check if the comment is older than 180 seconds
         now = datetime.now()
         t1 = datetime.fromtimestamp(comment.created_utc)
         age = now - t1
         t2 = timedelta(seconds=180)
+        test = timedelta(seconds=10)
 
-        if age > t2:
+        if age > test:
 
             for reply in replied_to:
                 if reply.comment_id is None:
