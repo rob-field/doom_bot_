@@ -1,3 +1,0 @@
-Mako
-MarkupSafe
-SQLAlchemy
