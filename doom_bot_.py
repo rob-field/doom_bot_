@@ -47,11 +47,10 @@ class Database(base):
     comment_id = Column(String, primary_key=True)
 
 
-db = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
-db = db()
+Session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
+db = Session()
 
 base.metadata.create_all(db)
-
 
 # Read
 replied_to = db.query(Database)
