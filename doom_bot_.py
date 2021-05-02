@@ -38,7 +38,7 @@ if uri.startswith("postgres://"):
 
 # Database setup
 engine = create_engine(uri)  # Creating an engine object to connect to the database
-base = declarative_base()
+Base = declarative_base()
 
 
 class Database(base):
@@ -50,7 +50,7 @@ class Database(base):
 Session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
 db = Session()
 
-base.metadata.create_all(db)
+Base.metadata.create_all(bind=engine)
 
 # Read
 replied_to = db.query(Database)
