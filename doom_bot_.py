@@ -8,6 +8,7 @@ import random
 import multiprocessing
 from datetime import datetime, timedelta
 import os
+from models import MyTable
 
 
 # Initialise the reddit instance
@@ -44,17 +45,8 @@ def connect_db():
     return db
 
 
-Base = declarative_base()
-
-
-class Database(Base):
-    __tablename__ = 'replied_to'
-
-    comment_id = Column(String, primary_key=True)
-
-
 engine = connect_db()
-Database.__table__.create(bind=engine, checkfirst=True)
+MyTable.__table__.create(bind=engine, checkfirst=True)
 
 Session = sessionmaker(bind=engine)
 session = Session()
@@ -63,9 +55,6 @@ session = Session()
 # Session = scoped_session(sessionmaker(bind=engine))
 # db = Session()
 # Base.metadata.create_all(bind=engine)
-
-# Read
-replied_to = session.query(Database)
 
 
 # Selection of MF DOOM Lyrics, more to be added later if necessary
@@ -89,7 +78,10 @@ DOOM_LYRICS = ["Catch a throatful from the fire vocal \n\n Ash and molten glass 
 
 # Main function
 def doom_bot():
-    session.engine.dispose()
+    session.flush()
+
+    # Read
+    replied_to = session.query(MyTable)
 
     # Selection of subreddits to search
     subreddit = reddit.subreddit("90sHipHop+freshalbumart+hiphop+Hiphopcirclejerk+HipHopImages+hiphopvinyl+"
