@@ -71,7 +71,7 @@ def doom_bot():
                                  "hiphop101+NYrap+raprock+rhymesandbeats+rapverses+undergroundchicago+LofiHipHop+"
                                  "doom_bot_")
 
-    # Ban list : HipHopHeads, makinghiphop
+    # Ban list - HipHopHeads, makinghiphop
 
     # Searching through each comment, checking if the ID is already in the database
     # If not check for appropriate pattern and capitalisation (or lack thereof), respond appropriately
