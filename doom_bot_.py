@@ -8,6 +8,7 @@ import random
 import multiprocessing
 from datetime import datetime, timedelta
 import os
+from SQLA_init import init_db, db_session
 from models import MyTable
 
 
@@ -22,39 +23,9 @@ reddit = praw.Reddit(
     user_agent="MF_DOOM"
 )
 
-uri = os.getenv("DATABASE_URL")  # or other relevant config var
-if uri.startswith("postgres://"):
-    uri = uri.replace("postgres://", "postgresql://", 1)
 
-# Create/connect to the database
-# db = dataset.connect('sqlite:///doom_db.db')
-# db = dataset.connect(uri)
-
-# create a table for commments that have been replied to
-# db.create_table('replied_to')
-# rt = db['replied_to']
-# create comment id column
-# db['replied_to'].create_column('comment_id', String)
-
-
-# Database setup
-
-def connect_db():
-    # create db create_engine
-    db = create_engine(uri)
-    return db
-
-
-engine = connect_db()
-MyTable.__table__.create(bind=engine, checkfirst=True)
-
-Session = sessionmaker(bind=engine)
-session = Session()
-
-
-# Session = scoped_session(sessionmaker(bind=engine))
-# db = Session()
-# Base.metadata.create_all(bind=engine)
+# Initialise database
+init_db()
 
 
 # Selection of MF DOOM Lyrics, more to be added later if necessary
@@ -78,10 +49,9 @@ DOOM_LYRICS = ["Catch a throatful from the fire vocal \n\n Ash and molten glass 
 
 # Main function
 def doom_bot():
-    session.flush()
 
     # Read
-    replied_to = session.query(MyTable)
+    replied_to = db_session.query(MyTable)
 
     # Selection of subreddits to search
     subreddit = reddit.subreddit("90sHipHop+freshalbumart+hiphop+Hiphopcirclejerk+HipHopImages+hiphopvinyl+"
@@ -118,9 +88,9 @@ def doom_bot():
                         comment.reply(doom_bot_reply + "\n***\n" + "^^I ^^am ^^a ^^bot.")
 
                         # Add ID to the database once done
-                        add_reply = Database(comment_id=comment.id)
-                        session.add(add_reply)
-                        session.commit()
+                        add_reply = MyTable(comment_id=comment.id)
+                        db_session.add(add_reply)
+                        db_session.commit()
 
                         # data = dict(comment_id=str(comment.id))
                         # rt.insert(data)
@@ -128,9 +98,9 @@ def doom_bot():
                     elif re.search("MF DOOM", str(comment.body)):
                         comment.reply(random.choice(DOOM_LYRICS) + "\n" + "***" + "\n" + "^^I ^^am ^^a ^^bot.")
 
-                        add_reply = Database(comment_id=comment.id)
-                        session.add(add_reply)
-                        session.commit()
+                        add_reply = MyTable(comment_id=comment.id)
+                        db_session.add(add_reply)
+                        db_session.commit()
 
                         # data = dict(comment_id=str(comment.id))
                         # rt.insert(data)
