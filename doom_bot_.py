@@ -1,7 +1,8 @@
 import praw
 import re
 import dataset
-from sqlalchemy import String
+from sqlalchemy import String, create_engine, MetaData, Table, Column
+from sqlalchemy.orm import scoped_session, sessionmaker, declarative_base
 import time
 import random
 import multiprocessing
@@ -26,14 +27,35 @@ if uri.startswith("postgres://"):
 
 # Create/connect to the database
 # db = dataset.connect('sqlite:///doom_db.db')
-db = dataset.connect(uri)
+# db = dataset.connect(uri)
 
 # create a table for commments that have been replied to
-db.create_table('replied_to')
-rt = db['replied_to']
-
+# db.create_table('replied_to')
+# rt = db['replied_to']
 # create comment id column
-db['replied_to'].create_column('comment_id', String)
+# db['replied_to'].create_column('comment_id', String)
+
+
+# Database setup
+engine = create_engine(uri)  # Creating an engine object to connect to the database
+base = declarative_base()
+
+
+class Database(base):
+    __tablename__ = 'replied_to'
+
+    comment_id = Column(String, primary_key=True)
+
+
+db = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
+db = db()
+
+base.metadata.create_all(db)
+
+
+# Read
+replied_to = db.query(Database)
+
 
 # Selection of MF DOOM Lyrics, more to be added later if necessary
 DOOM_LYRICS = ["Catch a throatful from the fire vocal \n\n Ash and molten glass like Eyjafjallajökull",
@@ -80,25 +102,36 @@ def doom_bot():
 
         if age > t2:
 
-            if rt.find_one(comment_id=comment.id) is None:
-                r = re.findall("(mf doom)", comment.body, re.IGNORECASE)
+            for reply in replied_to:
+                if reply.comment_id is None:
 
-                if re.search("[mfdo]+", str(r)):
+                    r = re.findall("(mf doom)", comment.body, re.IGNORECASE)
 
-                    doom_bot_reply = "Just remember ALL CAPS when you spell the man name!"
-                    comment.reply(doom_bot_reply + "\n***\n" + "^^I ^^am ^^a ^^bot.")
+                    if re.search("[mfdo]+", str(r)):
 
-                    # Add ID to the database once done
-                    data = dict(comment_id=str(comment.id))
-                    rt.insert(data)
+                        doom_bot_reply = "Just remember ALL CAPS when you spell the man name!"
+                        comment.reply(doom_bot_reply + "\n***\n" + "^^I ^^am ^^a ^^bot.")
 
-                elif re.search("MF DOOM", str(comment.body)):
-                    comment.reply(random.choice(DOOM_LYRICS) + "\n" + "***" + "\n" + "^^I ^^am ^^a ^^bot.")
-                    data = dict(comment_id=str(comment.id))
-                    rt.insert(data)
+                        # Add ID to the database once done
+                        add_reply = Database(comment_id=comment.id)
+                        db.add(add_reply)
+                        db.commit()
 
-                else:
-                    pass
+                        # data = dict(comment_id=str(comment.id))
+                        # rt.insert(data)
+
+                    elif re.search("MF DOOM", str(comment.body)):
+                        comment.reply(random.choice(DOOM_LYRICS) + "\n" + "***" + "\n" + "^^I ^^am ^^a ^^bot.")
+
+                        add_reply = Database(comment_id=comment.id)
+                        db.add(add_reply)
+                        db.commit()
+
+                        # data = dict(comment_id=str(comment.id))
+                        # rt.insert(data)
+
+                    else:
+                        pass
             else:
                 pass
         else:
