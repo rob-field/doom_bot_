@@ -1,8 +1,7 @@
 import praw
 import re
 import dataset
-from sqlalchemy import create_engine, String
-from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy import String
 import time
 import random
 import multiprocessing
@@ -25,13 +24,9 @@ uri = os.getenv("DATABASE_URL")  # or other relevant config var
 if uri.startswith("postgres://"):
     uri = uri.replace("postgres://", "postgresql://", 1)
 
-
-engine = create_engine(uri)
-db = scoped_session(sessionmaker(bind=engine))
-
 # Create/connect to the database
 # db = dataset.connect('sqlite:///doom_db.db')
-# db = dataset.connect(uri)
+db = dataset.connect(uri)
 
 # create a table for commments that have been replied to
 db.create_table('replied_to')
