@@ -79,9 +79,8 @@ def doom_bot():
         t1 = datetime.fromtimestamp(comment.created_utc)
         age = now - t1
         t2 = timedelta(seconds=180)
-        test = timedelta(seconds=10)
 
-        if age > test:
+        if age > t2:
 
             if not comment.saved:
 
