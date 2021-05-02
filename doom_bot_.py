@@ -41,13 +41,13 @@ engine = create_engine(uri)  # Creating an engine object to connect to the datab
 Base = declarative_base()
 
 
-class Database(base):
+class Database(Base):
     __tablename__ = 'replied_to'
 
     comment_id = Column(String, primary_key=True)
 
 
-Session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
+Session = scoped_session(sessionmaker(bind=engine))
 db = Session()
 
 Base.metadata.create_all(bind=engine)
