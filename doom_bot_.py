@@ -5,8 +5,6 @@ import random
 import multiprocessing
 from datetime import datetime, timedelta
 import os
-from SQLA_init import init_db, db_session
-from models import MyTable
 
 
 # Initialise the reddit instance
@@ -20,9 +18,6 @@ reddit = praw.Reddit(
     user_agent="MF_DOOM"
 )
 
-
-# Initialise database
-init_db()
 
 
 # Selection of MF DOOM Lyrics, more to be added later if necessary
@@ -46,9 +41,6 @@ DOOM_LYRICS = ["Catch a throatful from the fire vocal \n\n Ash and molten glass 
 
 # Main function
 def doom_bot():
-
-    # Read
-    replied_to = db_session.query(MyTable)
 
     # Selection of subreddits to search
     subreddit = reddit.subreddit("90sHipHop+freshalbumart+hiphop+Hiphopcirclejerk+HipHopImages+hiphopvinyl+"
@@ -74,36 +66,24 @@ def doom_bot():
 
         if age > test:
 
-            for reply in replied_to:
-                if reply.comment_id is None:
+            if not comment.saved:
 
-                    r = re.findall("(mf doom)", comment.body, re.IGNORECASE)
+                r = re.findall("(mf doom)", comment.body, re.IGNORECASE)
 
-                    if re.search("[mfdo]+", str(r)):
+                if re.search("[mfdo]+", str(r)):
 
-                        doom_bot_reply = "Just remember ALL CAPS when you spell the man name!"
-                        comment.reply(doom_bot_reply + "\n***\n" + "^^I ^^am ^^a ^^bot.")
+                    doom_bot_reply = "Just remember ALL CAPS when you spell the man name!"
+                    comment.reply(doom_bot_reply + "\n***\n" + "^^I ^^am ^^a ^^bot.")
 
-                        # Add ID to the database once done
-                        add_reply = MyTable(comment_id=comment.id)
-                        db_session.add(add_reply)
-                        db_session.commit()
+                    comment.save()
 
-                        # data = dict(comment_id=str(comment.id))
-                        # rt.insert(data)
+                elif re.search("MF DOOM", str(comment.body)):
+                    comment.reply(random.choice(DOOM_LYRICS) + "\n" + "***" + "\n" + "^^I ^^am ^^a ^^bot.")
 
-                    elif re.search("MF DOOM", str(comment.body)):
-                        comment.reply(random.choice(DOOM_LYRICS) + "\n" + "***" + "\n" + "^^I ^^am ^^a ^^bot.")
+                    comment.save()
 
-                        add_reply = MyTable(comment_id=comment.id)
-                        db_session.add(add_reply)
-                        db_session.commit()
-
-                        # data = dict(comment_id=str(comment.id))
-                        # rt.insert(data)
-
-                    else:
-                        pass
+                else:
+                    pass
             else:
                 pass
         else:
