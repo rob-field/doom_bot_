@@ -1,10 +1,12 @@
 import praw
+import prawcore
 import re
 import time
 import random
 import multiprocessing
 from datetime import datetime, timedelta
 import os
+import requests
 
 
 # Initialise the reddit instance
@@ -124,11 +126,15 @@ def scheduler():
 
             # Cleanup and rerun
             p.join()
+        except prawcore.exceptions.ResponseException as e:
+            print("ERR: {}".format(e))
+            time.sleep(200)
+        except requests.exceptions.ConnectionError as e:
+            print("ERROR: Reddit is down...")
+            time.sleep(200)  # sleep because reddit is down
         except Exception as e:
             print("ERR: {}".format(e))
             exit(1)
-
-# if re.search("mf doom", str(comment.body)) and re.search("^(?=.*[a-z]+).",  str(comment.body)):
 
 
 if __name__ == '__main__':
