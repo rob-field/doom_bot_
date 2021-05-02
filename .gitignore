@@ -4,3 +4,4 @@ venv/
 .idea
 praw.ini
 doom_db.db
+venv
