@@ -23,8 +23,8 @@ reddit = praw.Reddit(
 # Selection of MF DOOM Lyrics, more to be added later if necessary
 DOOM_LYRICS = ["Catch a throatful from the fire vocal \n\n Ash and molten glass like Eyjafjallajökull",
                "One for the money, two for the better green \n\n 3-4-methylenedioxymethamphetamine \n\n "
-               "Told the knock kneed ghetto queen get the head fiend \n\n Tell him it's for Medallin and use"
-               " oxcyocetaline",
+               "Told the knock kneed ghetto queen get the head fiend \n\n Tell him it's for Medallin and use "
+               "oxcyocetaline",
                "Only in America could you find a way to earn a healthy buck and still keep your attitude on self "
                "destruct",
                "Wrote this lyric in the bed with a chick \n\n She had the tightest grip around the head of my... \n\n "
@@ -36,7 +36,24 @@ DOOM_LYRICS = ["Catch a throatful from the fire vocal \n\n Ash and molten glass 
                "He kept a spare somewhere, in his underwear he swear \n\n Then helped her get the gum out her hair",
                "What up? \n\n To all rappers: shut up with your shutting up \n\n "
                "And keep your shirt on, at least a button-up \n\n Yuck, is they rhymers or strippin' males? \n\n "
-               "Out of work jerks since they shut down Chippendales"]
+               "Out of work jerks since they shut down Chippendales",
+               "Spit so many verses sometimes my jaw twitches \n\n One thing this party could use is more... booze",
+               "Couldn't find a pen, had to think of a new trick \n\n This one he wrote in cold blood with a toothpick",
+               "There's four sides to every story \n\n If these walls could talk, they'd probably still ignore me",
+               "You ain't know he sell hooks and choruses? \n\n They couldn't bang slang if they looked in thesauruses",
+               "Hold the cold one \n\n Like he hold the old gun \n\n Like he hold the microphone \n\n "
+               "And stole the show for fun",
+               "Crime pays, no dental nor medical \n\n Unless you catch retirement \n\n County, state, or federal",
+               "Make no mistake son, it's Jake One \n\n He makes beats well like I likes my steaks done",
+               "Simply smashing in a fashion that's timely \n\n Mad Villain dashing in a beat rhyme crime spree",
+               "Money comes and goes like that two bit hussy that night that tried to rush me \n\n "
+               "Dwight pass the dutchie \n\n So I can calm down so they don't get it twisted \n\n "
+               "Take it from the fire side it won't get blistered",
+               "Told the streets, 'What you staring at?' \n\n The sewer cap opened up and said, 'Why you wearing that?'",
+               "A shot of Jack got her back it's not an act stack \n\n "
+               "Forgot about the cackalack, holla back, clack clack blocka \n\n "
+               "Villainy, feel him in ya heart chakra, chart toppa \n\n Start shit stoppa be a smart shoppa"
+               ]
 
 
 # Main function
