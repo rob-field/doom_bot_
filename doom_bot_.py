@@ -10,6 +10,8 @@ import os
 # Initialise the reddit instance
 # Credentials are stored in a praw.ini file
 # reddit = praw.Reddit('bot1')
+
+# When deploying with Heroku use environmental variables
 reddit = praw.Reddit(
     client_id=os.environ['CLIENT_ID'],
     client_secret=os.environ['CLIENT_SECRET'],
@@ -17,7 +19,6 @@ reddit = praw.Reddit(
     password=os.environ['PASSWORD'],
     user_agent="MF_DOOM"
 )
-
 
 
 # Selection of MF DOOM Lyrics, more to be added later if necessary
@@ -72,7 +73,6 @@ def doom_bot():
 
     # Searching through each comment, checking if the ID is already in the database
     # If not check for appropriate pattern and capitalisation (or lack thereof), respond appropriately
-
     for comment in subreddit.stream.comments():
         # Check if the comment is older than 180 seconds
         now = datetime.now()
