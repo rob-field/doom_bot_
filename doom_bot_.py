@@ -1,5 +1,5 @@
 import praw
-import prawcore
+from prawcore import Forbidden, ResponseException
 import re
 import time
 import random
@@ -66,12 +66,12 @@ def doom_bot():
     subreddit = reddit.subreddit("90sHipHop+freshalbumart+hiphop+Hiphopcirclejerk+HipHopImages+hiphopvinyl+"
                                  "ifyoulikeblank+MetalFingers+mfdoom+MFDOOMCIRCLEJERK+Music+rap+"
                                  "treemusic+Bossfight+ListenToThis+DubStep+AlbumArtPorn+Audiophile+"
-                                 "OFWGKTA+LetsTalkMusic+chillmusic+Spotify+triphop+musicnews+Grime+altrap+backpacker+"
+                                 "OFWGKTA+chillmusic+Spotify+triphop+musicnews+Grime+altrap+backpacker+"
                                  "ukhiphopheads+hiphoptruth+asianrap+80sHipHop+backspin+hiphopheadsnorthwest+"
                                  "hiphop101+NYrap+raprock+rhymesandbeats+rapverses+undergroundchicago+LofiHipHop+"
                                  "doom_bot_")
 
-    # Ban list - HipHopHeads, makinghiphop
+    # Ban list - HipHopHeads, makinghiphop, LetsTalkMusic
 
     # Searching through each comment, checking if the ID is already in the database
     # If not check for appropriate pattern and capitalisation (or lack thereof), respond appropriately
@@ -126,9 +126,11 @@ def scheduler():
 
             # Cleanup and rerun
             p.join()
-        except prawcore.exceptions.ResponseException as e:
+        except ResponseException as e:
             print("ERR: {}".format(e))
             time.sleep(200)
+        except Forbidden as e:
+            print(print("ERR: {}".format(e)))
         except requests.exceptions.ConnectionError as e:
             print("ERROR: Reddit is down...")
             time.sleep(200)  # sleep because reddit is down
