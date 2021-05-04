@@ -67,7 +67,7 @@ if uri.startswith("postgres://"):
     uri = uri.replace("postgres://", "postgresql://", 1)
 
 
-engine = create_engine(uri, convert_unicode=True)  # Creating an engine object to connect to the database
+engine = create_engine(uri, client_encoding="utf8", pool_pre_ping=True)  # Creating an engine object to connect to the database
 # Creating a session object to provide access when querying the database
 db_session = scoped_session(sessionmaker(autoflush=False, autocommit=False, bind=engine))
 Base = declarative_base()  # A base class that can be used to declare class definitions which define the database tables
