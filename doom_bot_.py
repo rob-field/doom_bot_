@@ -88,9 +88,9 @@ def doom_bot():
         if age > t2:
 
             # if not comment.saved:
-            # query = db_session.query(MyTable)
+            query = db_session.query(MyTable).filter(MyTable.comment_id == comment.id).all()
             # query = query.filter(MyTable.comment_id == comment.id).all()
-            query = db_session.query(MyTable).filter(MyTable.comment_id.contains(comment.id)).all()
+            # query = db_session.query(MyTable).filter(MyTable.comment_id.contains(comment.id)).all()
 
             if query is False:
 
