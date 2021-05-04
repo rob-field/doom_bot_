@@ -28,6 +28,6 @@ class MyTable():
 
 def db_init():
 
-    Base.metadata.create_all(engine, tables=[Base.metadata.tables["replied_to"]])  # Create the database tables
+    Base.metadata.create_all(engine, tables=[Base.metadata.tables["MyTable"]])  # Create the database tables
 
 
