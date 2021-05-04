@@ -110,14 +110,10 @@ def doom_bot():
         t1 = datetime.fromtimestamp(comment.created_utc)
         age = now - t1
         t2 = timedelta(seconds=180)
-        test = timedelta(seconds=5)
 
-        if age > test:
-
-            # if not comment.saved:
+        if age > t2:
 
             query = db_session.query(MyTable).filter(MyTable.comment_id == comment.id).all()
-            # query = db_session.query(MyTable).filter(MyTable.comment_id.contains(comment.id)).all()
 
             if len(query) == 0:
 
@@ -128,12 +124,16 @@ def doom_bot():
                     doom_bot_reply = "Just remember ALL CAPS when you spell the man name!"
                     comment.reply(doom_bot_reply + "\n***\n" + "^^I ^^am ^^a ^^bot.")
 
-                    comment.save()
+                    new_comment_id = MyTable(comment_id=comment.id)
+                    db_session.add(new_comment_id)
+                    db_session.commit()
 
                 elif re.search("MF DOOM", str(comment.body)):
                     comment.reply(random.choice(DOOM_LYRICS) + "\n" + "***" + "\n" + "^^I ^^am ^^a ^^bot.")
 
-                    comment.save()
+                    new_comment_id = MyTable(comment_id=comment.id)
+                    db_session.add(new_comment_id)
+                    db_session.commit()
 
 
 def scheduler():
