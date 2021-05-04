@@ -7,6 +7,7 @@ import multiprocessing
 from datetime import datetime, timedelta
 import os
 import requests
+from db_setup import db_init, db_session, MyTable
 
 
 # Initialise the reddit instance
@@ -62,6 +63,8 @@ DOOM_LYRICS = ["Catch a throatful from the fire vocal \n\n Ash and molten glass 
 # Main function
 def doom_bot():
 
+    replied = db_session.query(MyTable)
+
     # Selection of subreddits to search
     subreddit = reddit.subreddit("90sHipHop+freshalbumart+hiphop+Hiphopcirclejerk+HipHopImages+hiphopvinyl+"
                                  "ifyoulikeblank+MetalFingers+mfdoom+MFDOOMCIRCLEJERK+Music+rap+"
@@ -84,7 +87,8 @@ def doom_bot():
 
         if age > t2:
 
-            if not comment.saved:
+            # if not comment.saved:
+            if replied.filter(MyTable.comment_id.like(comment.id)).all() is None:
 
                 r = re.findall("(mf doom)", comment.body, re.IGNORECASE)
 
@@ -140,5 +144,6 @@ def scheduler():
 
 
 if __name__ == '__main__':
+    db_init()
     print("Off we go...")
     scheduler()
