@@ -66,11 +66,10 @@ uri = os.getenv("DATABASE_URL")  # or other relevant config var
 if uri.startswith("postgres://"):
     uri = uri.replace("postgres://", "postgresql://", 1)
 
-engine = create_engine(uri, convert_unicode=True)  # Creating an engine object to connect to the database
 
+engine = create_engine(uri, convert_unicode=True, pool_pre_ping=True)  # Creating an engine object to connect to the database
 # Creating a session object to provide access when querying the database
 db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
-
 Base = declarative_base()  # A base class that can be used to declare class definitions which define the database tables
 
 
@@ -116,7 +115,6 @@ def doom_bot():
             # if not comment.saved:
 
             query = db_session.query(MyTable).filter(MyTable.comment_id == comment.id).all()
-            # query = query.filter(MyTable.comment_id == comment.id).all()
             # query = db_session.query(MyTable).filter(MyTable.comment_id.contains(comment.id)).all()
 
             if query is False:
