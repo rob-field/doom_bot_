@@ -27,8 +27,8 @@ class MyTable():
 
 
 def db_init():
-    MyTable.__table__.create(engine, checkfirst=True)
-    Base.metadata.create_all(bind=engine)
-    
+
+    Base.metadata.create_all(bind=engine, checkfirst=True)
+
 
 
