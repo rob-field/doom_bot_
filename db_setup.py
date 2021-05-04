@@ -17,7 +17,7 @@ Base = declarative_base()  # A base class that can be used to declare class defi
 
 
 class MyTable():
-    __tablename__ = "replied_tp"  # Name of the database table
+    __tablename__ = "replied_to"  # Name of the database table
     # __table_args__ = {'extend_existing': True}  # Specifies that a table with this name already exists in the database
 
     comment_id = Column(String, primary_key=True)  # Primary key acts as a unique identifier for each database entry
@@ -28,6 +28,6 @@ class MyTable():
 
 def db_init():
 
-    Base.metadata.create_all(engine, tables=[MyTable.__table__])  # Create the database tables
+    Base.metadata.create_all(engine, tables=[Base.metadata.tables["replied_to"]])  # Create the database tables
 
 
