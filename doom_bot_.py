@@ -63,7 +63,7 @@ DOOM_LYRICS = ["Catch a throatful from the fire vocal \n\n Ash and molten glass 
 # Main function
 def doom_bot():
 
-    replied = db_session.query(MyTable)
+
 
     # Selection of subreddits to search
     subreddit = reddit.subreddit("90sHipHop+freshalbumart+hiphop+Hiphopcirclejerk+HipHopImages+hiphopvinyl+"
@@ -88,7 +88,10 @@ def doom_bot():
         if age > t2:
 
             # if not comment.saved:
-            if replied.filter(MyTable.comment_id.like(comment.id)).all() is None:
+            replied = db_session.query(MyTable)
+            reply = replied.filter(MyTable.comment_id.like(comment.id)).all()
+
+            if reply is None:
 
                 r = re.findall("(mf doom)", comment.body, re.IGNORECASE)
 
