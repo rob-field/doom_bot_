@@ -110,7 +110,7 @@ def doom_bot():
         t1 = datetime.fromtimestamp(comment.created_utc)
         age = now - t1
         t2 = timedelta(seconds=180)
-        test = timedelta(seconds=10)
+        test = timedelta(seconds=5)
 
         if age > test:
 
@@ -119,7 +119,7 @@ def doom_bot():
             query = db_session.query(MyTable).filter(MyTable.comment_id == comment.id).all()
             # query = db_session.query(MyTable).filter(MyTable.comment_id.contains(comment.id)).all()
 
-            if query is False:
+            if query is None:
 
                 r = re.findall("(mf doom)", comment.body, re.IGNORECASE)
 
