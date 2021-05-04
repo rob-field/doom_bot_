@@ -7,7 +7,9 @@ import multiprocessing
 from datetime import datetime, timedelta
 import os
 import requests
-from db_setup import db_init, db_session, MyTable
+from sqlalchemy import create_engine, String, Column, Table
+from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
 
 
 # Initialise the reddit instance
@@ -60,10 +62,33 @@ DOOM_LYRICS = ["Catch a throatful from the fire vocal \n\n Ash and molten glass 
                ]
 
 
+uri = os.getenv("DATABASE_URL")  # or other relevant config var
+if uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
+
+engine = create_engine(uri, convert_unicode=True)  # Creating an engine object to connect to the database
+
+# Creating a session object to provide access when querying the database
+db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
+
+Base = declarative_base()  # A base class that can be used to declare class definitions which define the database tables
+
+
+class MyTable(Base):
+    __tablename__ = "replied_to"  # Name of the database table
+    # __table_args__ = {'extend_existing': True}  # Specifies that a table with this name already exists in the database
+
+    comment_id = Column(String, primary_key=True)  # Primary key acts as a unique identifier for each database entry
+
+    def __init__(self, comment_id):  # Assigning the appropriate attribute names to each column header of the table
+        self.comment_id = comment_id
+
+
+Base.metadata.create_all(bind=engine, checkfirst=True)
+
+
 # Main function
 def doom_bot():
-
-
 
     # Selection of subreddits to search
     subreddit = reddit.subreddit("90sHipHop+freshalbumart+hiphop+Hiphopcirclejerk+HipHopImages+hiphopvinyl+"
@@ -148,6 +173,5 @@ def scheduler():
 
 
 if __name__ == '__main__':
-    db_init()
     print("Off we go...")
     scheduler()
