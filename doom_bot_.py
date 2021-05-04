@@ -119,7 +119,7 @@ def doom_bot():
             query = db_session.query(MyTable).filter(MyTable.comment_id == comment.id).all()
             # query = db_session.query(MyTable).filter(MyTable.comment_id.contains(comment.id)).all()
 
-            if query.count() == 0:
+            if len(query) == 0:
 
                 r = re.findall("(mf doom)", comment.body, re.IGNORECASE)
 
