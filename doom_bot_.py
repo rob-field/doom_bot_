@@ -109,36 +109,35 @@ def doom_bot():
         t1 = datetime.fromtimestamp(comment.created_utc)
         age = now - t1
         t2 = timedelta(seconds=180)
+        test = timedelta(seconds=10)
 
-        if age > t2:
+        if age > test:
 
             # if not comment.saved:
-            query = db_session.query(MyTable).filter(MyTable.comment_id == comment.id).all()
+            try:
+                query = db_session.query(MyTable).filter(MyTable.comment_id == comment.id).all()
+
+                if query is False:
+
+                    r = re.findall("(mf doom)", comment.body, re.IGNORECASE)
+
+                    if re.search("[mfdo]+", str(r)):
+
+                        doom_bot_reply = "Just remember ALL CAPS when you spell the man name!"
+                        comment.reply(doom_bot_reply + "\n***\n" + "^^I ^^am ^^a ^^bot.")
+
+                        comment.save()
+
+                    elif re.search("MF DOOM", str(comment.body)):
+                        comment.reply(random.choice(DOOM_LYRICS) + "\n" + "***" + "\n" + "^^I ^^am ^^a ^^bot.")
+
+                        comment.save()
+            except Exception as e:
+                print(e)
             # query = query.filter(MyTable.comment_id == comment.id).all()
             # query = db_session.query(MyTable).filter(MyTable.comment_id.contains(comment.id)).all()
 
-            if query is False:
 
-                r = re.findall("(mf doom)", comment.body, re.IGNORECASE)
-
-                if re.search("[mfdo]+", str(r)):
-
-                    doom_bot_reply = "Just remember ALL CAPS when you spell the man name!"
-                    comment.reply(doom_bot_reply + "\n***\n" + "^^I ^^am ^^a ^^bot.")
-
-                    comment.save()
-
-                elif re.search("MF DOOM", str(comment.body)):
-                    comment.reply(random.choice(DOOM_LYRICS) + "\n" + "***" + "\n" + "^^I ^^am ^^a ^^bot.")
-
-                    comment.save()
-
-                else:
-                    pass
-            else:
-                pass
-        else:
-            pass
 
 
 def scheduler():
