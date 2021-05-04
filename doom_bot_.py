@@ -89,7 +89,7 @@ def doom_bot():
 
             # if not comment.saved:
             replied = db_session.query(MyTable)
-            reply = replied.filter(MyTable.comment_id.like(comment.id)).all()
+            reply = replied.filter(MyTable.comment_id == comment.id).all()
 
             if reply is None:
 
