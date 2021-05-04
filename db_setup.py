@@ -27,7 +27,8 @@ class MyTable():
 
 
 def db_init():
-
-    Base.metadata.create_all(engine, tables=[Base.metadata.tables["MyTable"]])  # Create the database tables
+    MyTable.__table__.create(engine, checkfirst=True)
+    Base.metadata.create_all(bind=engine)
+    
 
 
