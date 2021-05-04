@@ -88,10 +88,11 @@ def doom_bot():
         if age > t2:
 
             # if not comment.saved:
-            replied = db_session.query(MyTable)
-            reply = replied.filter(MyTable.comment_id == comment.id).all()
+            # query = db_session.query(MyTable)
+            # query = query.filter(MyTable.comment_id == comment.id).all()
+            query = db_session.query(MyTable).filter(MyTable.comment_id.contains(comment.id)).all()
 
-            if reply is None:
+            if query is False:
 
                 r = re.findall("(mf doom)", comment.body, re.IGNORECASE)
 
