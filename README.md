@@ -21,6 +21,8 @@ datetime
 
 
 # Changelog
+- 4.0.0
+  - added compatability with Heroku postgres database - now instead of saving each comment on reddit to prevent multiple replies, each comment ID is saved to the database which is checked before each comment
 - 3.0.0 
   - Changed doom_bot_ to allow deployment from Heroku
 - 2.0.0
