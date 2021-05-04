@@ -114,30 +114,26 @@ def doom_bot():
         if age > test:
 
             # if not comment.saved:
-            try:
-                query = db_session.query(MyTable).filter(MyTable.comment_id == comment.id).all()
 
-                if query is False:
-
-                    r = re.findall("(mf doom)", comment.body, re.IGNORECASE)
-
-                    if re.search("[mfdo]+", str(r)):
-
-                        doom_bot_reply = "Just remember ALL CAPS when you spell the man name!"
-                        comment.reply(doom_bot_reply + "\n***\n" + "^^I ^^am ^^a ^^bot.")
-
-                        comment.save()
-
-                    elif re.search("MF DOOM", str(comment.body)):
-                        comment.reply(random.choice(DOOM_LYRICS) + "\n" + "***" + "\n" + "^^I ^^am ^^a ^^bot.")
-
-                        comment.save()
-            except Exception as e:
-                print(e)
+            query = db_session.query(MyTable).filter(MyTable.comment_id == comment.id).all()
             # query = query.filter(MyTable.comment_id == comment.id).all()
             # query = db_session.query(MyTable).filter(MyTable.comment_id.contains(comment.id)).all()
 
+            if query is False:
 
+                r = re.findall("(mf doom)", comment.body, re.IGNORECASE)
+
+                if re.search("[mfdo]+", str(r)):
+
+                    doom_bot_reply = "Just remember ALL CAPS when you spell the man name!"
+                    comment.reply(doom_bot_reply + "\n***\n" + "^^I ^^am ^^a ^^bot.")
+
+                    comment.save()
+
+                elif re.search("MF DOOM", str(comment.body)):
+                    comment.reply(random.choice(DOOM_LYRICS) + "\n" + "***" + "\n" + "^^I ^^am ^^a ^^bot.")
+
+                    comment.save()
 
 
 def scheduler():
