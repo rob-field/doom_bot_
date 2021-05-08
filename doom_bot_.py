@@ -30,7 +30,7 @@ reddit = praw.Reddit(
 DOOM_LYRICS = ["Catch a throatful from the fire vocal \n\n Ash and molten glass like Eyjafjallajökull",
                "One for the money, two for the better green \n\n 3-4-methylenedioxymethamphetamine \n\n "
                "Told the knock kneed ghetto queen get the head fiend \n\n Tell him it's for Medallin and use "
-               "oxcyocetaline",
+               "oxyacetylene",
                "Only in America could you find a way to earn a healthy buck and still keep your attitude on self "
                "destruct",
                "Wrote this lyric in the bed with a chick \n\n She had the tightest grip around the head of my... \n\n "
