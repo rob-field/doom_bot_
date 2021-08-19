@@ -58,7 +58,13 @@ DOOM_LYRICS = ["Catch a throatful from the fire vocal \n\n Ash and molten glass 
                "Told the streets, 'What you staring at?' \n\n The sewer cap opened up and said, 'Why you wearing that?'",
                "A shot of Jack got her back it's not an act stack \n\n "
                "Forgot about the cackalack, holla back, clack clack blocka \n\n "
-               "Villainy, feel him in ya heart chakra, chart toppa \n\n Start shit stoppa be a smart shoppa"
+               "Villainy, feel him in ya heart chakra, chart toppa \n\n Start shit stoppa be a smart shoppa",
+               "Spit on the mic like yuck saliva",
+               "Greedy for the cheese please most couldn't fathom, \n\n had him in the cobra clutch when he spit the mad hymn",
+               "Wigs'll bleed with the quick speed \n\n Drag 'em backstage \n\n Like the tiger nigga did Siegfried",
+               "I can stop anytime I want to \n\n Famous last words that came back to haunt you \n\n All your life like permanent dry tears \n\n
+               Some cats get it like no bright ideas",
+               "To the head \n\n The new June Moon shootin' on a Blue Lagoon \n\n Shoo, as DOOM zooms in on a Platoon \n\n Phune! Sniper Elite"
                ]
 
 
