@@ -22,7 +22,7 @@ reddit = praw.Reddit(
     client_secret=os.environ['CLIENT_SECRET'],
     username=os.environ['USERNAME'],
     password=os.environ['PASSWORD'],
-    user_agent="MF_DOOM"
+    user_agent="doom_bot_"
 )
 
 
